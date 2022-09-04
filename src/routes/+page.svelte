@@ -1,11 +1,13 @@
 <script>
     import { TextInput, FileUploader, Tile, Accordion, AccordionItem, Button, ButtonSet, Loading, InlineLoading, ImageLoader, Link } from "carbon-components-svelte";
     import { schedule_data as schedule_data_glob } from '../stores/store'
+    import {onMount} from 'svelte'
     let image = ""
     let generatedImage = ""
     let isLoaded = false
     let isUploaded = false
     let isWaitingWallpaper = false
+    let screenWidth
     let schedule_data 
     schedule_data_glob.subscribe(val => {
         isLoaded = true
@@ -14,7 +16,9 @@
     let update_schedule = () => {
         schedule_data_glob.set(JSON.stringify(schedule_data))
     }
-    $: console.log(isWaitingWallpaper)
+    onMount(() => {
+        screenWidth = window.screen.width
+    })
 </script>
 <svelte:head>
     <title>Shedule project</title>
@@ -68,7 +72,7 @@
                             update_schedule()
                         }} kind="danger" size="sm">Удалить урок</Button>
                     {/each}
-                    <ButtonSet>
+                    <ButtonSet stacked={screenWidth < 800}>
                         <Button on:click={() => {
                             schedule_data.schedule[i].lessons.push({name: "", room: ""})
                             update_schedule()
@@ -143,6 +147,11 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+@media (max-width: 800px) {
+    .container{
+        width: 100%;
+    }
 }
 .settings {
     display: flex;
