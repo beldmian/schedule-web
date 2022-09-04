@@ -7,8 +7,8 @@ export const schedule_data = writable(stored || JSON.stringify({
         height: 800,
         padding_top: 50,
         padding_left: 32,
-        output_width: 2160,
-        output_height: 1440
+        output_width: 1920,
+        output_height: 1080
     },
     schedule: []
 }))
